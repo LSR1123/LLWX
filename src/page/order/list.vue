@@ -11,13 +11,13 @@
       <el-table-column prop="customerId" label="顾客id"></el-table-column>
       <el-table-column prop="waiterId" label="员工id"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column label="操作">
-        <template v-slot="slot">
+      <el-table-column label="操作"/>
+    </el-table>
+        <!-- <template v-slot="slot">
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
           <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
         </template>
-      </el-table-column>
-    </el-table>
+      </el-table-column> -->
     <!-- /表格结束 -->
     <!-- 分页开始 -->
     <!-- <el-pagination layout="prev, pager, next" :total="50"></el-pagination> -->
