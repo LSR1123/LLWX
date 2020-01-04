@@ -70,7 +70,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="closModleHandler" >取 消</el-button>
-                <el-button type="primary" @click="closModleHandler" >确 定</el-button>
+                <el-button type="primary" @click="submitHandler" >确 定</el-button>
             </span>
         </el-dialog>
         <!--/模态框-->
@@ -148,7 +148,7 @@ export default {
     },
     data(){
         return {
-            title:"录入员工信息",
+            title:"录入订单信息",
             visible:false,
             employees:[],
             form:{
