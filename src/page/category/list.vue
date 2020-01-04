@@ -13,9 +13,9 @@
            <el-table-column width=120px prop="parentId" label="所属产品"></el-table-column>
            <el-table-column fixed="right" label="操作">
                 <template v-slot="slot">
-                  <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
-                  <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
-                  <a href="" @click.prevent="toUpdateHandler(slot.row)">详情</a>
+           <i class="el-icon-delete"  @click.prevent="toDeleteHandler(slot.row.id)"></i>
+      <i class="el-icon-edit-outline" @click.prevent="toUpdateHandler(slot.row)" ></i>
+      <a href=""  @click.prevent="topen" >详情</a>
 
               </template>
            </el-table-column>
@@ -53,6 +53,18 @@ import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
     methods:{
+
+       topen() {
+        this.$alert('不能看', '警告', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+      },
        loadData(){
       let url ="http://localhost:6677/category/findAll"
       request.get(url).then((response)=>{
