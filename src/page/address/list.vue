@@ -5,7 +5,7 @@
     <el-button type="danger" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="addresses">
+    <el-table :data="addresses.list">
       <el-table-column prop="id" label="编号"></el-table-column>
       <el-table-column prop="province" label="省份"></el-table-column>
       <el-table-column prop="city" label="城市"></el-table-column>
@@ -22,7 +22,11 @@
     </el-table>
     <!-- /表格结束 -->
     <!-- 分页开始 -->
-    <!-- <el-pagination layout="prev, pager, next" :total="50"></el-pagination> -->
+    <el-pagination 
+        layout="prev, pager, next" 
+        :total="addresses.total" 
+        @current-change="pageChageHandler">
+        </el-pagination>
     <!-- /分页结束 -->
     <!-- 模态框 -->
     <el-dialog
@@ -64,9 +68,23 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
+     pageChageHandler(page){
+        // 将params中当前页改为插件中的当前页
+        this.params.page = page-1;
+        // 加载
+        this.loadData();
+    },
     loadData(){
-      let url ="http://localhost:6677//address/findAll"
-      request.get(url).then((response)=>{
+      let url ="http://localhost:6677//address/query"
+
+     request({
+        url,
+        method:"POST",
+        headers:{
+          "Content-Type":"application/x-www-form-urlencoded"
+        },
+        data:querystring.stringify(this.params)
+      }).then((response)=>{
         // 将查询结果设置到address中，this指向外部函数的this
         this.addresses = response.data;
       })
@@ -135,11 +153,16 @@ export default {
   data(){
     return {
       visible:false,
-      addresses:[],
+      addresses:{},
       form:{
         type:"address"
+      },
+      params:{
+        page:0,
+       pageSize:10
       }
     }
+    
   },
   created(){
     // this为当前vue实例对象
