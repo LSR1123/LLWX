@@ -5,11 +5,15 @@
     <el-button type="danger" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="customers">
+    <el-table :data="addresses">
       <el-table-column prop="id" label="编号"></el-table-column>
-      <el-table-column prop="realname" label="姓名"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column prop="province" label="省份"></el-table-column>
+      <el-table-column prop="city" label="城市"></el-table-column>
+      <el-table-column prop="area" label="区/县"></el-table-column>
+      <el-table-column prop="address" label="详细地址"></el-table-column>
+      <el-table-column prop="telephone" label="联系方式"></el-table-column>
+      <el-table-column prop="customerId" label="顾客id"></el-table-column>
+      <el-table-column fixed="right" label="操作">
         <template v-slot="slot">
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
           <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
@@ -27,17 +31,20 @@
       width="60%">
         ---{{form}}
       <el-form :model="form" label-width="80px">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username"></el-input>
+        <el-form-item label="省份">
+          <el-input v-model="form.province"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input type="password" v-model="form.password"></el-input>
+        <el-form-item label="城市">
+          <el-input v-model="form.city"></el-input>
         </el-form-item>
-        <el-form-item label="真实姓名">
-          <el-input v-model="form.realname"></el-input>
+        <el-form-item label="区/县">
+          <el-input v-model="form.area"></el-input>
         </el-form-item>
-        <el-form-item label="地址">
+        <el-form-item label="详细地址">
           <el-input v-model="form.address"></el-input>
+        </el-form-item>
+        <el-form-item label="联系方式">
+          <el-input v-model="form.telephone"></el-input>
         </el-form-item>
       </el-form>
 
@@ -52,16 +59,17 @@
 </template>
 
 <script>
+
 import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
     loadData(){
-      let url ="http://localhost:6677/customer/findAll"
+      let url ="http://localhost:6677//address/findAll"
       request.get(url).then((response)=>{
-        // 将查询结果设置到customers中，this指向外部函数的this
-        this.customers = response.data;
+        // 将查询结果设置到address中，this指向外部函数的this
+        this.addresses = response.data;
       })
     },
     submitHandler(){
@@ -70,7 +78,7 @@ export default {
       // request.post(url,this.form)
       // 查询字符串 type=customer&age=12
       // 通过request与后台进行交互，并且要携带参数
-      let url = "http://localhost:6677/customer/saveOrUpdate";
+      let url = "http://localhost:6677//address/saveOrUpdate";
       request({
         url,
         method:"POST",
@@ -98,7 +106,7 @@ export default {
         type: 'warning'
       }).then(() => {
 
-        let url ="http://localhost:6677/customer/deleteById?id="+id;
+        let url ="http://localhost:6677/address/deleteById?id="+id;
         request.get(url).then((response)=>{
           this.loadData();
           this.$message({
@@ -121,7 +129,7 @@ export default {
     toAddHandler(){
  
       this.form = {
-        type:"customer"
+        type:"address"
       }
       this.visible = true;
     }
@@ -130,9 +138,9 @@ export default {
   data(){
     return {
       visible:false,
-      customers:[],
+      addresses:[],
       form:{
-        type:"customer"
+        type:"address"
       }
     }
   },
