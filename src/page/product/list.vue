@@ -11,12 +11,14 @@
            <el-table-column prop="status" label="状态"></el-table-column>       
            <el-table-column width=120px prop="categoryId" label="所属产品"></el-table-column>
            <el-table-column fixed="right" label="操作">
-                <template v-slot="slot">
-                  <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
-                  <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
-
-              </template>
-           </el-table-column>
+            <template v-slot="slot">
+               
+          <i class="el-icon-delete"  @click.prevent="toDeleteHandler(slot.row.id)"></i>
+      <i class="el-icon-edit-outline" @click.prevent="toUpdateHandler(slot.row)" ></i>
+      <a href=""  @click.prevent="topen" >详情</a>
+        </template>
+        </el-table-column>
+         
        </el-table>  
         <!--分页符-->
        <el-pagination
@@ -79,8 +81,19 @@ import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
     methods:{
+        topen() {
+        this.$alert('没有更多了', '告知', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+      },
         submitHandler(){
-            let url = "http://localhost:6677//product/saveOrUpdate"
+            let url = "http://localhost/product/saveOrUpdate"
             request({
                 url,
                 method:"POST",
@@ -113,9 +126,12 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-             this.$message({
-                type: 'success',
-                message: '删除成功!'
+             let url ="http://localhost:6677/product/deleteById?id="+id;
+        request.get(url).then((response)=>{
+          this.loadData();
+          this.$message({
+                  type: 'success',
+                  message: response.message})
              });
             })
         },
