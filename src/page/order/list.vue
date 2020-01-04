@@ -2,16 +2,26 @@
   <div>
     <!-- 按钮 -->
   
+  <el-tabs v-model="activeName" type ="card" @tab-click="handleClick">
+    <el-tab-pane label="所有订单" name="first"></el-tab-pane>
+    <el-tab-pane label="待支付" name="second"></el-tab-pane>
+    <el-tab-pane label="待派单" name="third"></el-tab-pane>
+    <el-tab-pane label="待服务" name="fourth"></el-tab-pane>
+    <el-tab-pane label="待确认" name="fifth"></el-tab-pane>
+    <el-tab-pane label="已完成" name="sixth"></el-tab-pane>
+  </el-tabs>
+
+
     <!-- 表格 -->
-    <el-table :data="orders">
+    <el-table :data="orders.list">
       <el-table-column prop="id" label="订单编号"></el-table-column>
-      <el-table-column prop="orderTime" label="下单时间"></el-table-column>
+      <el-table-column width="200" prop="orderTime" label="下单时间"></el-table-column>
       <el-table-column prop="total" label="总价"></el-table-column>
       <el-table-column prop="status" label="状态"></el-table-column>
-      <el-table-column prop="customerId" label="顾客id"></el-table-column>
-      <el-table-column prop="waiterId" label="员工id"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column label="操作"/>
+      <el-table-column prop="customerId" label="顾客ID"></el-table-column>
+      <el-table-column prop="waiterId" label="员工ID"></el-table-column>
+      <el-table-column prop="addressId" label="地址ID"></el-table-column>
+      <el-table-column fixed="right" label="操作"/>
     </el-table>
         <!-- <template v-slot="slot">
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
@@ -23,6 +33,10 @@
     <!-- <el-pagination layout="prev, pager, next" :total="50"></el-pagination> -->
     <!-- /分页结束 -->
     <!-- 模态框 -->
+    <el-pagination
+      layout="prev,pager,next"
+      :total="orders.total"
+      @current-change="pageChangHandler"></el-pagination>
     <el-dialog
       title="录入订单信息"
       :visible.sync="visible"
@@ -50,11 +64,29 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
+    //当分页中当前页改变的时候执行
+    pageChangeHandler(page){
+      //当params中当前页改为插件中的当前页
+      this.parmas.page = page-1;
+      //加载
+      this.loadData();
+    },
     loadData(){
-      let url ="http://localhost:6677/order/findAll"
-      request.get(url).then((response)=>{
-        // 将查询结果设置到customers中，this指向外部函数的this
+      let url ="http://localhost:6677/order/queryPage"
+      request({
+        url,
+        method:"post",
+        headers:{
+          "Content-Type":"application/x-www-form-urlencoded"
+        },
+        data:querystring.stringify(this.parmas)
+        
+      }).then((response)=>{
         this.orders = response.data;
+      
+      // request.get(url).then((response)=>{
+        // 将查询结果设置到customers中，this指向外部函数的this
+        // this.orders = response.data;
       })
     },
     submitHandler(){
@@ -123,9 +155,13 @@ export default {
   data(){
     return {
       visible:false,
-      orders:[],
+      orders:{},
       form:{
         type:"order"
+      },
+      parmas:{
+        page:0,
+        pageSize:10
       }
     }
   },
