@@ -113,18 +113,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/address',
-    component: Layout,
-    children: [
-      {
-        path: 'list',
-        name: 'Form',
-        component: () => import('@/page/address/list.vue'),
-        meta: { title: '地址管理', icon: 'user' }
-      }
-    ]
-  },
+ 
   
   {
     path: '/page',
@@ -168,7 +157,18 @@ export const constantRoutes = [
     },
   ]
 },
- 
+{
+  path: '/address',
+  component: Layout,
+  children: [
+    {
+      path: 'list',
+      name: 'Form',
+      component: () => import('@/page/address/list.vue'),
+      meta: { title: '地址管理', icon: 'user' }
+    }
+  ]
+},
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
