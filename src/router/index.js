@@ -113,7 +113,18 @@ export const constantRoutes = [
       }
     ]
   },
- 
+  {
+    path: '/comment',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'Form',
+        component: () => import('@/page/comment/list.vue'),
+        meta: { title: '评论管理', icon: 'user' }
+      }
+    ]
+  },
   
   {
     path: '/page',
