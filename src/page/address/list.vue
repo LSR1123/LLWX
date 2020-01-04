@@ -59,7 +59,6 @@
 </template>
 
 <script>
-
 import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
@@ -97,7 +96,6 @@ export default {
           message:response.message
         })
       })
-
     },
     toDeleteHandler(id){
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -105,7 +103,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-
         let url ="http://localhost:6677/address/deleteById?id="+id;
         request.get(url).then((response)=>{
           this.loadData();
@@ -148,7 +145,6 @@ export default {
     // this为当前vue实例对象
     // vue实例创建完毕 
     this.loadData()
-
   }
 }
 </script>
