@@ -26,23 +26,29 @@
         <!--/分页符-->
               <!--模态框-->
         <el-dialog
-            title="录入员工信息"
+            title="录入信息"
             :visible.sync="visible"
             width="60%">
               <el-form :model="form" label-width="80px">
-        <el-form-item label="栏目名称">
+                <el-form-item label="编号">
+          <el-input v-model="form.id"></el-input>
+        </el-form-item>
+        <el-form-item label="产品名称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="序号">
-          <el-input  v-model="form.number"></el-input>
+        <el-form-item label="价格">
+          <el-input  v-model="form.num"></el-input>
         </el-form-item>
-        <el-form-item label="父栏目">
+        <el-form-item label="描述">
+          <el-input v-model="form.icon"></el-input>
+        </el-form-item>
+        <el-form-item label="所属产品">
           <el-input v-model="form.parentId"></el-input>
         </el-form-item>
       </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button size="small" @click="closModleHandler" >取 消</el-button>
-                <el-button size="small" type="primary" @click="closModleHandler" >确 定</el-button>
+                <el-button size="small" type="primary" @click="submitHandler" >确 定</el-button>
             </span>
         </el-dialog>
         <!--/模态框-->
@@ -135,7 +141,7 @@ export default {
   },
     data(){
         return {
-            title:"录入员工信息",
+          
             visible:false,
             categorys:[],
             form:{
