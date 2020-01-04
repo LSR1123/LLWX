@@ -5,9 +5,9 @@
     <el-button type="danger" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="products">
-      <el-table-column prop="id" label="编号"></el-table-column>
-      <el-table-column prop="name" label="产品名称"></el-table-column>
+    <el-table :data="products.list">
+      <el-table-column  prop="id" label="编号"></el-table-column>
+      <el-table-column  prop="name" label="产品名称"></el-table-column>
       <el-table-column prop="price" label="单价"></el-table-column>
       <el-table-column prop="description" label="描述"></el-table-column>
       <el-table-column prop="categoryId" label="所属分类"></el-table-column>
@@ -20,7 +20,11 @@
     </el-table>
     <!-- /表格结束 -->
     <!-- 分页开始 -->
-    <!-- <el-pagination layout="prev, pager, next" :total="50"></el-pagination> -->
+  <el-pagination 
+        layout="prev, pager, next" 
+        :total="products.total" 
+        @current-change="pageChageHandler">
+        </el-pagination>
     <!-- /分页结束 -->
     <!-- 模态框 -->
     <el-dialog
@@ -66,18 +70,31 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
+    pageChageHandler(page){
+        // 将params中当前页改为插件中的当前页
+        this.params.page = page-1;
+        // 加载
+        this.loadData();
+    },
     loadCategory(){
-      let url = "http://localhost:6677/category/findAll"
+      let url = "http://localhost:6677/product/findAll"
       request.get(url).then((response)=>{
         // 将查询结果设置到products中，this指向外部函数的this
         this.options = response.data;
       })
     },
     loadData(){
-      let url = "http://localhost:6677/product/findAll"
-      request.get(url).then((response)=>{
-        // 将查询结果设置到products中，this指向外部函数的this
-        this.products = response.data;
+      let url = "http://localhost:6677/product/query"
+      request({
+          url,
+          method:"post",
+          headers:{
+              "Content-Type":"application/x-www-form-urlencoded"
+          },
+          data:querystring.stringify(this.params)
+      }).then((response)=>{
+          // orders为一个对象，其中包含了分页信息，以及列表信息
+          this.products = response.data;
       })
     },
     submitHandler(){
@@ -144,12 +161,18 @@ export default {
   },
   // 用于存放要向网页中显示的数据
   data(){
+    
     return {
       visible:false,
       products:[],
       options:[],
-      form:{}
+      form:{},
+      params:{
+          page:0,
+          pageSize:10
+      }
     }
+    
   },
   created(){
     // this为当前vue实例对象
