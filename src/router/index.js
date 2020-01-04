@@ -101,6 +101,30 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/order',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'Form',
+        component: () => import('@/page/order/list.vue'),
+        meta: { title: '订单管理', icon: 'user' }
+      }
+    ]
+  },
+  {
+    path: '/address',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'Form',
+        component: () => import('@/page/address/list.vue'),
+        meta: { title: '地址管理', icon: 'user' }
+      }
+    ]
+  },
   
   {
     path: '/page',
@@ -122,6 +146,27 @@ export const constantRoutes = [
         meta: { title: '产品管理' }
       },
     ]
+},
+{
+  path: '/page',
+  //component: () => import('@/page/nested/index.vue'), // Parent router-view
+  component: Layout,
+  name: 'Form',
+  meta: { title: '审核管理', icon: 'user' },
+  children: [
+    {
+      path: '/page/Employee review',
+      component: () => import('@/page/Employee review/list.vue'),
+      name: '员工审核',
+      meta: { title: '员工审核' }
+    },
+    {
+      path: '/page/product audit',
+      component: () => import('@/page/product audit/list.vue'),
+      name: '产品审核',
+      meta: { title: '产品审核' }
+    },
+  ]
 },
  
 
