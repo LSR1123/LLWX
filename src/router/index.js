@@ -85,7 +85,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'Form',
         component: () => import('@/page/customer/list.vue'),
-        meta: { title: '顾客管理', icon: 'user' }
+        meta: { title: '顾客管理', icon: 'customer' }
       }
     ]
   },
@@ -97,7 +97,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'Form',
         component: () => import('@/page/employee/list.vue'),
-        meta: { title: '员工管理', icon: 'user' }
+        meta: { title: '员工管理', icon: 'employee' }
       }
     ]
   },
@@ -109,7 +109,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'Form',
         component: () => import('@/page/order/list.vue'),
-        meta: { title: '订单管理', icon: 'user' }
+        meta: { title: '订单管理', icon: 'order' }
       }
     ]
   },
@@ -121,7 +121,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'Form',
         component: () => import('@/page/comment/list.vue'),
-        meta: { title: '评论管理', icon: 'user' }
+        meta: { title: '评论管理', icon: 'comment' }
       }
     ]
   },
@@ -131,7 +131,7 @@ export const constantRoutes = [
     //component: () => import('@/page/nested/index.vue'), // Parent router-view
     component: Layout,
     name: 'Form',
-    meta: { title: '系统配置', icon: 'user' },
+    meta: { title: '系统配置', icon: 'settings' },
     children: [
       {
         path: '/page/category',
@@ -152,7 +152,7 @@ export const constantRoutes = [
   //component: () => import('@/page/nested/index.vue'), // Parent router-view
   component: Layout,
   name: 'Form',
-  meta: { title: '审核管理', icon: 'user' },
+  meta: { title: '审核管理', icon: 'audit' },
   children: [
     {
       path: '/page/Employee review',
@@ -176,7 +176,7 @@ export const constantRoutes = [
       path: 'list',
       name: 'Form',
       component: () => import('@/page/address/list.vue'),
-      meta: { title: '地址管理', icon: 'user' }
+      meta: { title: '地址管理', icon: 'address' }
     }
   ]
 },
