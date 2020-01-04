@@ -5,7 +5,7 @@
        <el-button type="danger" size="small">批量删除</el-button>
        <!-- /按钮 -->
        <!-- /表格 -->
-       <el-table :data="categorys">
+       <el-table :data="categorys.list">
            <el-table-column fixed="left" prop="id" label="编号"></el-table-column>
             <el-table-column fixed="left" prop="name" label="产品名称"></el-table-column>
            <el-table-column prop="num" label="价格"></el-table-column>
@@ -22,7 +22,11 @@
        </el-table>  
         <!--表格结束-->
         <!-- 分页开始 -->
-       <!-- <el-paginationlayout="prev, pager, next" :total="50"> </el-pagination>  -->
+       <el-pagination 
+        layout="prev, pager, next" 
+        :total="categorys.total" 
+        @current-change="pageChageHandler">
+        </el-pagination>
         <!--/分页符-->
               <!--模态框-->
         <el-dialog
@@ -59,6 +63,12 @@ import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
     methods:{
+      pageChageHandler(page){
+        // 将params中当前页改为插件中的当前页
+        this.params.page = page-1;
+        // 加载
+        this.loadData();
+    },
 
        topen() {
         this.$alert('不能看', '警告', {
@@ -72,10 +82,17 @@ export default {
         });
       },
        loadData(){
-      let url ="http://localhost:6677/category/findAll"
-      request.get(url).then((response)=>{
-        // 将查询结果设置到customers中，this指向外部函数的this
-        this.categorys = response.data;
+      let url = "http://localhost:6677/category/query"
+      request({
+          url,
+          method:"post",
+          headers:{
+              "Content-Type":"application/x-www-form-urlencoded"
+          },
+          data:querystring.stringify(this.params)
+      }).then((response)=>{
+          // orders为一个对象，其中包含了分页信息，以及列表信息
+        this.categorys= response.data;
       })
     },
     submitHandler(){
@@ -143,16 +160,22 @@ export default {
         return {
           
             visible:false,
-            categorys:[],
+            categorys:{},
             form:{
                 type:"category"
-            }
-        }  
+            },
+            params:{
+          page:0,
+          pageSize:10
+      }
+        } 
+         
     },
   created(){
         //在页面加载出来的时候加载数据
         this.loadData();
-    }
+    },
+  
 }
 </script>
 <style scoped>
