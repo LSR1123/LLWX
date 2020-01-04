@@ -101,8 +101,6 @@ export const constantRoutes = [
       }
     ]
   },
-<<<<<<< HEAD
-=======
   {
     path: '/order',
     component: Layout,
@@ -115,23 +113,7 @@ export const constantRoutes = [
       }
     ]
   },
-<<<<<<< HEAD
  
-=======
-  {
-    path: '/address',
-    component: Layout,
-    children: [
-      {
-        path: 'list',
-        name: 'Form',
-        component: () => import('@/page/address/list.vue'),
-        meta: { title: '地址管理', icon: 'user' }
-      }
-    ]
-  },
->>>>>>> 26d45e4a8da6fb5df106dccd8b6d4903386c8351
->>>>>>> 02d111b0100d91ebecb5074ffa7702438d0a1ed7
   
   {
     path: '/page',
@@ -154,8 +136,6 @@ export const constantRoutes = [
       },
     ]
 },
-<<<<<<< HEAD
-=======
 {
   path: '/page',
   //component: () => import('@/page/nested/index.vue'), // Parent router-view
@@ -177,7 +157,6 @@ export const constantRoutes = [
     },
   ]
 },
-<<<<<<< HEAD
 {
   path: '/address',
   component: Layout,
@@ -190,10 +169,6 @@ export const constantRoutes = [
     }
   ]
 },
-=======
->>>>>>> 26d45e4a8da6fb5df106dccd8b6d4903386c8351
- 
->>>>>>> 02d111b0100d91ebecb5074ffa7702438d0a1ed7
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
