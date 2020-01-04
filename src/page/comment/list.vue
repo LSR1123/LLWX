@@ -56,7 +56,7 @@ export default {
   // 用于存放网页中需要调用的方法
   methods:{
     loadData(){
-      let url ="http://134.175.154.93:6677/comment/findAll"
+      let url ="http://localhost:6677/comment/findAll"
       request.get(url).then((response)=>{
         // 将查询结果设置到comments中，this指向外部函数的this
         this.comments = response.data;
@@ -68,7 +68,7 @@ export default {
       // request.post(url,this.form)
       // 查询字符串 type=comment&age=12
       // 通过request与后台进行交互，并且要携带参数
-      let url = "http://134.175.154.93:6677/comment/saveOrUpdate";
+      let url = "http://localhost:6677/comment/saveOrUpdate";
       request({
         url,
         method:"POST",
@@ -96,7 +96,7 @@ export default {
         type: 'warning'
       }).then(() => {
 
-        let url ="http://134.175.154.93:6677/comment/deleteById?id="+id;
+        let url ="http://localhost:6677/comment/deleteById?id="+id;
         request.get(url).then((response)=>{
           this.loadData();
           this.$message({
