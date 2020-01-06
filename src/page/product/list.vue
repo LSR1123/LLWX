@@ -11,6 +11,12 @@
       <el-table-column prop="price" label="单价"></el-table-column>
       <el-table-column prop="description" label="描述"></el-table-column>
       <el-table-column prop="categoryId" label="所属分类"></el-table-column>
+      <el-table-column  label="照片" prop = "photo">
+        <template slot-scope="scope" prop = "photo">
+          <img :src="scope.row.photo" width="200" height="200">
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作">
         <template v-slot="slot">
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
@@ -52,6 +58,17 @@
         <el-form-item label="描述">
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
+<el-form-item label="图片">
+      <el-upload
+        class="upload-demo"
+        action="http://134.175.154.93:6677/file/upload"
+        :file-list="fileList"
+        list-type="picture"
+        :on-success="uploadSuccessHandler">
+        <el-button size="small" type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
+    </el-form-item>
       </el-form>
 
       <span slot="footer" class="dialog-footer">
@@ -70,6 +87,14 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
+     uploadSuccessHandler(response){
+
+      let photo = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
+        console.log(response);
+
+      this.form.photo = photo;
+
+    },
     pageChageHandler(page){
         // 将params中当前页改为插件中的当前页
         this.params.page = page-1;
@@ -97,6 +122,9 @@ export default {
           this.products = response.data;
       })
     },
+    // uploadSuccessHandler(response){
+    //   console.log(response)
+    // },
     submitHandler(){
       //this.form 对象 ---字符串--> 后台 {type:'product',age:12}
       // json字符串 '{"type":"product","age":12}'
@@ -164,9 +192,12 @@ export default {
     
     return {
       visible:false,
+      fileList:[],
       products:[],
       options:[],
-      form:{},
+      form:{
+         type : "product"
+      },
       params:{
           page:0,
           pageSize:10
