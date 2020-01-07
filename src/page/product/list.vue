@@ -58,7 +58,6 @@
         <el-form-item label="描述">
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
-<<<<<<< HEAD
 <el-form-item label="图片">
       <el-upload
         class="upload-demo"
@@ -70,19 +69,6 @@
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
       </el-upload>
     </el-form-item>
-=======
-
-      <el-form-item label="图片">
-        <el-upload
-        class="upload-demo"
-        action="http://134.175.154.93:6677/file/upload"
-        :on-success="aaa"
-        list-type="picture">
-        <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload_tip">只能上传jpg/png的文件且不超过500KB</div>
-        </el-upload>
-      </el-form-item>
->>>>>>> c91b0aa183f3b99e770f11d3bab1fda0701aeabe
       </el-form>
 
       
@@ -103,7 +89,6 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
-<<<<<<< HEAD
      uploadSuccessHandler(response){
 
       let photo = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
@@ -111,12 +96,7 @@ export default {
 
       this.form.photo = photo;
 
-=======
-    //上传成功的事件处理函数
-    uploadSuccessHandler(response){
-      let photo = "http://134,175.154.93:8888/group1/"+response.data.id//将图片地址设置到form中，便于一起提交给后台
-      this.form.photo = photo;
->>>>>>> c91b0aa183f3b99e770f11d3bab1fda0701aeabe
+
     },
     pageChageHandler(page){
         // 将params中当前页改为插件中的当前页
