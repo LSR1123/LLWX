@@ -89,6 +89,7 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
     path: '/employee',
     component: Layout,
@@ -101,31 +102,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/order',
-    component: Layout,
-    children: [
-      {
-        path: 'list',
-        name: 'Form',
-        component: () => import('@/page/order/list.vue'),
-        meta: { title: '订单管理', icon: 'order' }
-      }
-    ]
-  },
-  {
-    path: '/comment',
-    component: Layout,
-    children: [
-      {
-        path: 'list',
-        name: 'Form',
-        component: () => import('@/page/comment/list.vue'),
-        meta: { title: '评论管理', icon: 'comment' }
-      }
-    ]
-  },
-  
+
   {
     path: '/page',
     //component: () => import('@/page/nested/index.vue'), // Parent router-view
@@ -139,6 +116,7 @@ export const constantRoutes = [
         name: '栏目管理',
         meta: { title: '栏目管理' }
       },
+
       {
         path: '/page/product',
         component: () => import('@/page/product/list.vue'),
@@ -146,40 +124,69 @@ export const constantRoutes = [
         meta: { title: '产品管理' }
       },
     ]
-},
-{
-  path: '/page',
-  //component: () => import('@/page/nested/index.vue'), // Parent router-view
-  component: Layout,
-  name: 'Form',
-  meta: { title: '审核管理', icon: 'audit' },
-  children: [
-    {
-      path: '/page/Employee review',
-      component: () => import('@/page/Employee review/list.vue'),
-      name: '员工审核',
-      meta: { title: '员工审核' }
-    },
-    {
-      path: '/page/product audit',
-      component: () => import('@/page/product audit/list.vue'),
-      name: '产品审核',
-      meta: { title: '产品审核' }
-    },
-  ]
-},
-{
-  path: '/address',
-  component: Layout,
-  children: [
-    {
-      path: 'list',
-      name: 'Form',
-      component: () => import('@/page/address/list.vue'),
-      meta: { title: '地址管理', icon: 'address' }
-    }
-  ]
-},
+  },
+  
+  {
+    path: '/page',
+    //component: () => import('@/page/nested/index.vue'), // Parent router-view
+    component: Layout,
+    name: 'Form',
+    meta: { title: '审核管理', icon: 'audit' },
+    children: [
+      {
+        path: '/page/Employee review',
+        component: () => import('@/page/Employee review/list.vue'),
+        name: '员工审核',
+        meta: { title: '员工审核' }
+      },
+
+      {
+        path: '/page/product audit',
+        component: () => import('@/page/product audit/list.vue'),
+        name: '产品审核',
+        meta: { title: '产品审核' }
+      },
+    ]
+  },
+
+  {
+    path: '/address',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'Form',
+        component: () => import('@/page/address/list.vue'),
+        meta: { title: '地址管理', icon: 'address' }
+      }
+    ]
+  },
+
+  {
+    path: '/comment',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'Form',
+        component: () => import('@/page/comment/list.vue'),
+        meta: { title: '评论管理', icon: 'comment' }
+      }
+    ]
+  },
+
+  {
+    path: '/order',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'Form',
+        component: () => import('@/page/order/list.vue'),
+        meta: { title: '订单管理', icon: 'order' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
