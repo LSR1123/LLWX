@@ -70,8 +70,11 @@
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
       </el-upload>
     </el-form-item>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 8a8cc8a2744adb15bbf8ea916d2fda40aab6fc88
       </el-form>
 
       
@@ -93,7 +96,10 @@ export default {
   // 用于存放网页中需要调用的方法
   //更新
   methods:{
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8a8cc8a2744adb15bbf8ea916d2fda40aab6fc88
      uploadSuccessHandler(response){
 
       let photo = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
