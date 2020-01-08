@@ -187,6 +187,23 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/page/xiangq.edit',
+    component: Layout,
+    children: [
+      {
+        path: 'xiangq',
+        name: 'Form',
+        component: () => import('@/page/chaxun/xiangq.vue'),
+
+     }]
+    
+    },
+//   {
+//     path: '/page/xiangq.edit',
+//     component: Layout,
+
+// },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
