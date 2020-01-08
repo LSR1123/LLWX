@@ -92,7 +92,10 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   //更新
-  methods:{     uploadSuccessHandler(response){
+  methods:{
+
+     uploadSuccessHandler(response){
+
 
       let photo = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
         console.log(response);

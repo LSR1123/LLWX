@@ -9,13 +9,17 @@
            <el-table-column fixed="left" prop="id" label="编号"></el-table-column>
             <el-table-column fixed="left" prop="name" label="产品名称"></el-table-column>
            <el-table-column prop="num" label="价格"></el-table-column>
-           <el-table-column prop="icon" label="描述"></el-table-column>
+            
            <el-table-column width=120px prop="parentId" label="所属产品"></el-table-column>
+          <el-table-column  label="描述" prop = "icon">
+        <template slot-scope="scope" prop = "icon">
+          <img :src="scope.row.icon" width="200" height="200">
+        </template>
+      </el-table-column>
            <el-table-column fixed="right" label="操作">
                 <template v-slot="slot">
            <i class="el-icon-delete"  @click.prevent="toDeleteHandler(slot.row.id)"></i>
       <i class="el-icon-edit-outline" @click.prevent="toUpdateHandler(slot.row)" ></i>
-      <a href=""  @click.prevent="topen" >详情</a>
 
               </template>
            </el-table-column>
@@ -39,56 +43,92 @@
           </div>
      
               </el-dialog> -->
-
-
-
-
         <el-dialog
             title="录入信息"
             :visible.sync="visible"
             width="60%">
+            {{form}}
               <el-form :model="form" label-width="80px">
-                <el-form-item label="编号">
-          <el-input v-model="form.id"></el-input>
-        </el-form-item>
-        <el-form-item label="产品名称">
+        <el-form-item label="语言">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="价格">
-          <el-input  v-model="form.num"></el-input>
+        <el-form-item label="编号">
+          <el-input v-model="form.num"></el-input>
+        </el-form-item>
+        <el-form-item label="所属栏目">
+            <el-select v-model="form.parentId">
+                <el-option 
+                    v-for="item in options" 
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"></el-option>
+            </el-select>
         </el-form-item>
         <el-form-item label="描述">
-          <el-input v-model="form.icon"></el-input>
+          <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
-        <el-form-item label="所属产品">
-          <el-input v-model="form.parentId"></el-input>
-        </el-form-item>
+<el-form-item label="图片">
+      <el-upload
+        class="upload-demo"
+        action="http://134.175.154.93:6677/file/upload"
+        :file-list="fileList"
+        list-type="picture"
+        :on-success="uploadSuccessHandler">
+        <el-button size="small" type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    
+      </el-upload>
+
+</el-form-item>
       </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="closModleHandler" >取 消</el-button>
-                <el-button size="small" type="primary" @click="submitHandler" >确 定</el-button>
-            </span>
-        </el-dialog>
-        <!--/模态框-->
-    </div>
+
+      
+
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="closeModalHandler">取 消</el-button>
+        <el-button size="small" type="primary" @click="submitHandler">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- /模态框 -->
+
+  </div>
 </template>
+
 <script>
 import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
-    methods:{
-      pageChageHandler(page){
+  // 用于存放网页中需要调用的方法
+  //更新
+  methods:{
+
+     uploadSuccessHandler(response){
+
+
+      let icon = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
+        console.log(response);
+
+      this.form.icon = icon;
+
+
+    },
+    pageChageHandler(page){
         // 将params中当前页改为插件中的当前页
         this.params.page = page-1;
         // 加载
         this.loadData();
     },
-
-      //  topen() {
-      //          this.open = true;
-
-      // },
-       loadData(){
+    //加载栏目信息
+    loadCategory(){
+      
+      let url = "http://localhost:6677/category/findAll"
+      request.get(url).then((response)=>{
+        // 将查询结果设置到categorys中，this指向外部函数的this
+        this.options = response.data;
+      })
+    },
+    loadData(){
+      this.fileList = []
       let url = "http://localhost:6677/category/query"
       request({
           url,
@@ -99,15 +139,19 @@ export default {
           data:querystring.stringify(this.params)
       }).then((response)=>{
           // orders为一个对象，其中包含了分页信息，以及列表信息
-        this.categorys= response.data;
+          this.categorys = response.data;
       })
     },
+    // uploadSuccessHandler(response){
+    //   console.log(response)
+    // },
     submitHandler(){
-      //this.form 对象 ---字符串--> 后台 {type:'customer',age:12}
-      // json字符串 '{"type":"customer","age":12}'
+      //this.form 对象 ---字符串--> 后台 {type:'category',age:12}
+      // json字符串 '{"type":"category","age":12}'
       // request.post(url,this.form)
-      // 查询字符串 type=customer&age=12
+      // 查询字符串 type=category&age=12
       // 通过request与后台进行交互，并且要携带参数
+      this.fileList=[]
       let url = "http://localhost:6677/category/saveOrUpdate";
       request({
         url,
@@ -127,63 +171,72 @@ export default {
           message:response.message
         })
       })
-
     },
-        toDeleteHandler(id){
-            //确认
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                let url = "http://localhost:6677/category/deleteByld?id="+id;
-             request.get(url).then((response)=>{
-        this.loadData();
+    toDeleteHandler(id){
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 调用后台接口，完成删除操作
+        let url = "http://localhost:6677/category/deleteById?id="+id;
+        request.get(url).then((response)=>{
+          //1. 刷新数据
+          this.loadData();
+          //2. 提示结果
           this.$message({
-                  type: 'success',
-                  message: response.message
-        });
-          
+            type: 'success',
+            message: response.message
+          });
         })
-       
+        
+        
       })
       
     },
-        toUpdateHandler(row){
-            this.form =row;
-            this.visible = true;
-        },
-       closModleHandler(){
-           this.visible = false;
-       },
-        toAddHandler(){
-          this.form = {
-        type:"category"
-      }
+    toUpdateHandler(row){
+     
+      // 模态框表单中显示出当前行的信息
+      this.form = row;
+      this.visible = true;
+    },
+    closeModalHandler(){
+      this.visible = false;
+    },
+    toAddHandler(){
+      // 将form变为初始值
+      this.form = {}
       this.visible = true;
     }
   },
-    data(){
-        return {
-          // open:false,
-            visible:false,
-            categorys:{},
-            form:{
-                type:"category"
-            },
-            params:{
+  // 用于存放要向网页中显示的数据
+  data(){
+    
+    return {
+      visible:false,
+      fileList:[],
+      categorys:[],
+      options:[],
+      form:{
+         type : "category"
+      },
+      params:{
           page:0,
           pageSize:10
       }
-        } 
-         
-    },
+    }
+    
+  },
   created(){
-        //在页面加载出来的时候加载数据
-        this.loadData();
-    },
-  
+    // this为当前vue实例对象
+    // vue实例创建完毕 
+    this.loadData();
+    // 加载栏目信息，用于表单中下拉菜单
+    this.loadCategory();
+  }
 }
 </script>
+
 <style scoped>
+ 
 </style>
