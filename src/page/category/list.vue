@@ -29,6 +29,20 @@
         </el-pagination>
         <!--/分页符-->
               <!--模态框-->
+              <!-- <el-dialog
+            title="录入信息"
+            :open="open"
+            width="60%">
+          
+          <div>
+        <p> <strong>订单编号：</strong> {{form.id}} </p>
+          </div>
+     
+              </el-dialog> -->
+
+
+
+
         <el-dialog
             title="录入信息"
             :visible.sync="visible"
@@ -70,17 +84,10 @@ export default {
         this.loadData();
     },
 
-       topen() {
-        this.$alert('不能看', '警告', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${ action }`
-            });
-          }
-        });
-      },
+      //  topen() {
+      //          this.open = true;
+
+      // },
        loadData(){
       let url = "http://localhost:6677/category/query"
       request({
@@ -158,7 +165,7 @@ export default {
   },
     data(){
         return {
-          
+          // open:false,
             visible:false,
             categorys:{},
             form:{

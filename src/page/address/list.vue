@@ -2,6 +2,8 @@
   <div>
     <!-- 按钮 -->
     <el-button type="success" size="small" @click="toAddHandler">添加</el-button> 
+    <el-button type="success" size="small" @click="chaxun">查询</el-button> 
+
     <el-button type="danger" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
@@ -68,6 +70,9 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
+    chaxun(){
+      
+    },
      pageChageHandler(page){
         // 将params中当前页改为插件中的当前页
         this.params.page = page-1;
