@@ -22,7 +22,7 @@
       <el-table-column prop="addressId" label="地址ID"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template v-slot="slot">
-          <a href="javascript:void(0)" >详情</a>
+         <a  href="" @click.prevent="toAddressEditHandler">详情</a>
           <a href="" v-if="slot.row.status === '待派单'" @click.prevent="toSendOrderHandler(slot.row)">派单</a>
           
         </template>
@@ -76,6 +76,10 @@ import querystring from 'querystring'
 export default {
   // 用于存放网页中需要调用的方法
   methods:{
+    toAddressEditHandler(row){
+      // 编程跳转
+      this.$router.push("/page/xiangq.edit/xiangq");
+    },
     // 当分页中当前页改变的时候执行
     pageChageHandler(page){
         // 将params中当前页改为插件中的当前页
