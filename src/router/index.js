@@ -187,6 +187,12 @@ export const constantRoutes = [
       }
     ]
   },
+  // {
+  //   path: 'xiangq/:id',
+  //     name:'xiangq',
+  //     component:chaxun
+    
+  //  } ,
   {
     path: '/page/xiangq.edit',
     component: Layout,
