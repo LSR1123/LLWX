@@ -97,7 +97,7 @@ export default {
      uploadSuccessHandler(response){
 
 
-      let photo = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
+      let photo = "http://134.175.154.93:8888/"+response.data.groupname+"/"+response.data.id;
         console.log(response);
 
       this.form.photo = photo;

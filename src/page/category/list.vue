@@ -10,7 +10,7 @@
             <el-table-column fixed="left" prop="name" label="产品名称"></el-table-column>
            <el-table-column prop="num" label="价格"></el-table-column>
             
-           <el-table-column width=120px prop="parentId" label="所属栏目"></el-table-column>
+          
           <el-table-column  label="描述" prop = "icon">
         <template slot-scope="scope" prop = "icon">
           <img :src="scope.row.icon" width="200" height="200">
@@ -55,13 +55,8 @@
         <el-form-item label="价格">
           <el-input v-model="form.num"></el-input>
         </el-form-item>
-        <el-form-item label="所属栏目">
-            <el-input v-model="form.parentId"></el-input>
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input type="textarea" v-model="form.icon"></el-input>
-        </el-form-item>
-<el-form-item label="图片">
+        
+    <el-form-item label="描述">
       <el-upload
         class="upload-demo"
         action="http://134.175.154.93:6677/file/upload"
@@ -98,8 +93,8 @@ export default {
 
      uploadSuccessHandler(response){
 
+      let icon = "http://134.175.154.93:8888/"+response.data.groupname+"/"+response.data.id;
 
-      let icon = "http://134.175.154.93:8888/"+response.data.grougname+"/"+response.data.id;
         console.log(response);
 
       this.form.icon = icon;
@@ -118,7 +113,7 @@ export default {
       let url = "http://localhost:6677/category/findAll"
       request.get(url).then((response)=>{
         // 将查询结果设置到categorys中，this指向外部函数的this
-        this.options = response.data;
+        this.categorys = response.data;
       })
     },
     loadData(){
