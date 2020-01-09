@@ -10,7 +10,7 @@
             <el-table-column fixed="left" prop="name" label="产品名称"></el-table-column>
            <el-table-column prop="num" label="价格"></el-table-column>
             
-           <el-table-column width=120px prop="parentId" label="所属产品"></el-table-column>
+           <el-table-column width=120px prop="parentId" label="所属栏目"></el-table-column>
           <el-table-column  label="描述" prop = "icon">
         <template slot-scope="scope" prop = "icon">
           <img :src="scope.row.icon" width="200" height="200">
@@ -49,23 +49,17 @@
             width="60%">
             {{form}}
               <el-form :model="form" label-width="80px">
-        <el-form-item label="语言">
+        <el-form-item label="产品名称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="编号">
+        <el-form-item label="价格">
           <el-input v-model="form.num"></el-input>
         </el-form-item>
         <el-form-item label="所属栏目">
-            <el-select v-model="form.parentId">
-                <el-option 
-                    v-for="item in options" 
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"></el-option>
-            </el-select>
+            <el-input v-model="form.parentId"></el-input>
         </el-form-item>
         <el-form-item label="描述">
-          <el-input type="textarea" v-model="form.description"></el-input>
+          <el-input type="textarea" v-model="form.icon"></el-input>
         </el-form-item>
 <el-form-item label="图片">
       <el-upload
@@ -230,9 +224,7 @@ export default {
   created(){
     // this为当前vue实例对象
     // vue实例创建完毕 
-    this.loadData();
-    // 加载栏目信息，用于表单中下拉菜单
-    this.loadCategory();
+    this.loadData()
   }
 }
 </script>
